@@ -149,7 +149,7 @@ export function createApp({ store, claudeDir, publicDir, host, token = null }) {
           // appearing in the address bar, in history, and in any Referer the page sends out.
           extra['set-cookie'] = `cc_token=${token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=31536000`;
         } else if (!safeEqual(cookieValue(req.headers.cookie, 'cc_token'), token)) {
-          return send(401, '{"error":"token required: open the URL cc-monitor printed at startup"}');
+          return send(401, '{"error":"token required: open the URL claude-city printed at startup"}');
         }
       }
       if (req.method === 'POST' && (url.pathname === '/hook' || url.pathname === '/status')) {
@@ -227,14 +227,22 @@ const portOrNull = (v) => {
 // default port. Both port paths validate identically, because the environment one is the one people
 // hand-edit in ~/.claude/settings.json, and an out-of-range port makes server.listen throw a
 // *synchronous* RangeError that no 'error' listener ever sees.
+// CLAUDE_CITY_* is the current name; CC_MONITOR_* is what the project was called before, and still
+// works so an existing settings.json keeps its port.
+export function envOf(env, key) {
+  const v = env[`CLAUDE_CITY_${key}`];
+  return v === undefined || v === '' ? env[`CC_MONITOR_${key}`] : v;
+}
+
 export function parseArgs(argv = [], env = process.env, warn = (m) => console.error(m)) {
   const out = {
-    host: env.CC_MONITOR_HOST || '127.0.0.1',
+    host: envOf(env, 'HOST') || '127.0.0.1',
     port: DEFAULT_PORT,
-    claudeDir: env.CC_MONITOR_CLAUDE_DIR || join(homedir(), '.claude'),
+    claudeDir: envOf(env, 'CLAUDE_DIR') || join(homedir(), '.claude'),
   };
-  const envPort = portOrNull(env.CC_MONITOR_PORT);
-  if (envPort === undefined) warn(`[cc-monitor] CC_MONITOR_PORT=${env.CC_MONITOR_PORT} is not a port between 0 and 65535; using ${DEFAULT_PORT}`);
+  const envPortRaw = envOf(env, 'PORT');
+  const envPort = portOrNull(envPortRaw);
+  if (envPort === undefined) warn(`[claude-city] CLAUDE_CITY_PORT=${envPortRaw} is not a port between 0 and 65535; using ${DEFAULT_PORT}`);
   else if (envPort !== null) out.port = envPort;
   for (let i = 0; i < argv.length; i++) {
     const arg = String(argv[i]);
@@ -246,7 +254,7 @@ export function parseArgs(argv = [], env = process.env, warn = (m) => console.er
     if (value === undefined || value === '') continue;
     if (key === 'port') {
       const n = portOrNull(value);
-      if (n === undefined) warn(`[cc-monitor] --port ${value} is not a port between 0 and 65535; using ${out.port}`);
+      if (n === undefined) warn(`[claude-city] --port ${value} is not a port between 0 and 65535; using ${out.port}`);
       else if (n !== null) out.port = n;
       continue;
     }
@@ -271,7 +279,7 @@ function main() {
   const token = isLoopbackHost(host) ? null : makeToken();
   const server = createApp({ store, claudeDir, publicDir: join(here, 'public'), host, token });
   server.on('error', (e) => {
-    if (e.code === 'EADDRINUSE') { console.error(`[cc-monitor] port ${port} in use (another cc-monitor?)`); process.exit(1); }
+    if (e.code === 'EADDRINUSE') { console.error(`[claude-city] port ${port} in use (another claude-city?)`); process.exit(1); }
     throw e;
   });
   // A wildcard bind is the address the socket listens on, not one you can type into a browser, so
@@ -281,16 +289,16 @@ function main() {
   const query = token ? `/?token=${token}` : '';
   try {
     server.listen(port, host, () => {
-      console.log(`[cc-monitor] http://${shown}:${port}${query}  watching ${claudeDir}`);
+      console.log(`[claude-city] http://${shown}:${port}${query}  watching ${claudeDir}`);
       if (token) {
-        console.log(`[cc-monitor] WARNING: bound to ${host}, so the dashboard is reachable from the whole network and anyone on it can read your prompts, file paths and tool calls.`);
-        console.log('[cc-monitor] Open the link above on the phone; the token is required once and then kept in a cookie. Substitute this machine\'s LAN address for the host.');
+        console.log(`[claude-city] WARNING: bound to ${host}, so the dashboard is reachable from the whole network and anyone on it can read your prompts, file paths and tool calls.`);
+        console.log('[claude-city] Open the link above on the phone; the token is required once and then kept in a cookie. Substitute this machine\'s LAN address for the host.');
       }
     });
   } catch (e) {
     // listen() validates its arguments synchronously, so a bad host or port throws here and never
     // reaches the 'error' handler above. A stack trace would be a worse answer than a sentence.
-    console.error(`[cc-monitor] cannot listen on ${host}:${port}: ${e.message}`);
+    console.error(`[claude-city] cannot listen on ${host}:${port}: ${e.message}`);
     process.exit(1);
   }
   // close() alone waits for every open connection to end, and an SSE stream never ends, so

@@ -55,3 +55,9 @@ Format:
 **Context:** The human: "we are making something iOS, Linux, Windows, everyone can use".
 **Decision:** Per-OS process listing (`pwsh` on Windows, `ps` on macOS/Linux); POSIX sh hooks; opt-in `--host` flag to bind the LAN for phone viewing; touch-friendly page (Phaser pointer/pinch, bottom-sheet panel under 640 px).
 **Consequences:** A macOS/Linux test run is needed before calling it done; iOS means Safari on the LAN, not a native app.
+
+## ADR-0008 Rename to claude-city and ship as a Claude Code plugin (2026-10-08)
+**Status:** accepted
+**Context:** The human asked for an installable Claude Code plugin and a new name, and chose "claude-city". Claude Code reserves plugin names that start with `claude-`, and a plugin cannot set a status line.
+**Decision:** The product, repo and marketplace are `claude-city`; the plugin ID is `cc-city`, installed as `cc-city@claude-city`. Hooks are Node scripts (`hooks/forward.mjs`, `hooks/start.mjs`) run in exec form, async except the SessionStart starter, replacing the `sh` + `curl` scripts. The context bar is estimated from each turn's usage divided by the model's window (`lib/prices.json`), with the status-line tee still available for the exact figure. `CLAUDE_CITY_*` environment variables replace `CC_MONITOR_*`, which still work.
+**Consequences:** Two-command install on every OS with no Git Bash requirement, and hooks never add latency. The first events of the very first session after boot can be lost while the server reads `~/.claude`. A plugin update takes effect after the server restarts.

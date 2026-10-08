@@ -1,4 +1,4 @@
-// npm run demo — a city full of made-up Claude Code sessions, so you can see cc-monitor without
+// npm run demo — a city full of made-up Claude Code sessions, so you can see claude-city without
 // running Claude Code, and so screenshots never show anyone's real prompts or paths.
 //
 // It builds a throwaway `.claude` folder in the OS temp directory, starts the real server against
@@ -15,9 +15,9 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const argPort = process.argv.indexOf('--port');
-const PORT = Number(argPort > -1 ? process.argv[argPort + 1] : process.env.CC_MONITOR_PORT) || 4890;
+const PORT = Number(argPort > -1 ? process.argv[argPort + 1] : (process.env.CLAUDE_CITY_PORT || process.env.CC_MONITOR_PORT)) || 4890;
 const BASE = `http://127.0.0.1:${PORT}`;
-const DIR = mkdtempSync(join(tmpdir(), 'cc-monitor-demo-'));
+const DIR = mkdtempSync(join(tmpdir(), 'claude-city-demo-'));
 const pick = (list) => list[Math.floor(Math.random() * list.length)];
 const between = (lo, hi) => lo + Math.floor(Math.random() * (hi - lo + 1));
 const iso = () => new Date().toISOString();
@@ -175,7 +175,7 @@ function finishedSession() {
 }
 
 const server = spawn(process.execPath, [join(ROOT, 'server.mjs'), '--port', String(PORT)], {
-  env: { ...process.env, CC_MONITOR_CLAUDE_DIR: DIR, CC_MONITOR_HOST: '127.0.0.1' },
+  env: { ...process.env, CLAUDE_CITY_CLAUDE_DIR: DIR, CLAUDE_CITY_HOST: '127.0.0.1' },
   stdio: ['ignore', 'pipe', 'inherit'],
 });
 server.stdout.on('data', () => {});

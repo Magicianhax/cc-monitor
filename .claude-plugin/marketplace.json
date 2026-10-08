@@ -1,0 +1,19 @@
+{
+  "name": "claude-city",
+  "owner": {
+    "name": "Magicianhax",
+    "url": "https://github.com/Magicianhax"
+  },
+  "metadata": {
+    "description": "Claude City: every Claude Code session on your machine as a living pixel-art city."
+  },
+  "plugins": [
+    {
+      "name": "cc-city",
+      "source": "./",
+      "description": "Watch every Claude Code session on your machine as a living pixel-art city, with a live panel for tokens, cost and every tool call.",
+      "category": "monitoring",
+      "homepage": "https://github.com/Magicianhax/claude-city"
+    }
+  ]
+}

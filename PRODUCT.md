@@ -2,7 +2,7 @@
 
 ## What it is
 
-cc-monitor is a local web page that turns every running Claude Code session on your machine into a living pixel-art city. Sessions are houses; agents and subagents are citizens who walk to the Library, Forge, Server hall, Radio tower or Town hall depending on the tool they are using; background shells drive around as cars; guard blocks send a guard running. A persistent side panel narrates the same state as text: sessions, what each agent is doing now, tokens, cost, context window, and a live activity feed. Data comes from Claude Code hooks and the transcript files under `~/.claude`; nothing leaves the machine.
+claude-city is a local web page that turns every running Claude Code session on your machine into a living pixel-art city. Sessions are houses; agents and subagents are citizens who walk to the Library, Forge, Server hall, Radio tower or Town hall depending on the tool they are using; background shells drive around as cars; guard blocks send a guard running. A persistent side panel narrates the same state as text: sessions, what each agent is doing now, tokens, cost, context window, and a live activity feed. Data comes from Claude Code hooks and the transcript files under `~/.claude`; nothing leaves the machine.
 
 ## Who it is for
 

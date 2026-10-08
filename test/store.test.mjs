@@ -174,3 +174,16 @@ test('a hook-opened tool call is re-homed to the transcript agent', () => {
   assert.equal(sess.agents.get('a1').tool, null);
   assert.equal(sess.agents.get('main').state, 'idle');
 });
+
+test('context is estimated from the main agent until a status line reports it', () => {
+  const s = new Store();
+  const usage = (agentId, cacheRead) => ({ kind: 'usage', sessionId: 'c1', agentId, ts: 1, model: 'claude-opus-5',
+    tokens: { input: 0, output: 10, cacheRead, cacheWrite: 0, thinking: 0 }, toolUses: [] });
+  s.applyEvent(usage('main', 300_000));
+  assert.equal(s.session('c1').contextPct, 30);
+  s.applyEvent(usage('sub1', 900_000));            // a subagent's own context is not the session's
+  assert.equal(s.session('c1').contextPct, 30);
+  s.applyStatus({ session_id: 'c1', context_window: { used_percentage: 41 } });
+  s.applyEvent(usage('main', 600_000));            // the status line, once seen, wins
+  assert.equal(s.session('c1').contextPct, 41);
+});

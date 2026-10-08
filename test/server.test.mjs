@@ -202,12 +202,12 @@ test('parseArgs defaults to loopback, port 4888 and ~/.claude', () => {
 });
 
 test('parseArgs reads the environment', () => {
-  const a = parseArgs([], { CC_MONITOR_HOST: '0.0.0.0', CC_MONITOR_PORT: '5000', CC_MONITOR_CLAUDE_DIR: '/tmp/cc' });
+  const a = parseArgs([], { CLAUDE_CITY_HOST: '0.0.0.0', CLAUDE_CITY_PORT: '5000', CLAUDE_CITY_CLAUDE_DIR: '/tmp/cc' });
   assert.deepEqual(a, { host: '0.0.0.0', port: 5000, claudeDir: '/tmp/cc' });
 });
 
 test('parseArgs flags beat the environment, in both spellings', () => {
-  const env = { CC_MONITOR_HOST: '10.0.0.5', CC_MONITOR_PORT: '5000' };
+  const env = { CLAUDE_CITY_HOST: '10.0.0.5', CLAUDE_CITY_PORT: '5000' };
   assert.deepEqual(
     parseArgs(['--host', '0.0.0.0', '--port', '4000', '--claude-dir', '/tmp/x'], env),
     { host: '0.0.0.0', port: 4000, claudeDir: '/tmp/x' },
@@ -222,7 +222,7 @@ test('parseArgs ignores junk rather than dying on it', () => {
   const a = parseArgs(['--host', '', '--port', 'abc', '--wat'], {});
   assert.equal(a.host, '127.0.0.1');
   assert.equal(a.port, 4888);
-  assert.equal(parseArgs([], { CC_MONITOR_PORT: 'nope' }, () => {}).port, 4888);
+  assert.equal(parseArgs([], { CLAUDE_CITY_PORT: 'nope' }, () => {}).port, 4888);
   assert.equal(parseArgs(['--host'], {}).host, '127.0.0.1');   // trailing flag, no value
 });
 
@@ -238,15 +238,24 @@ test('isLoopbackHost decides when the LAN warning is printed', () => {
 test('parseArgs rejects an out-of-range port from either source, with one warning', () => {
   const warned = [];
   const warn = (m) => warned.push(m);
-  assert.equal(parseArgs([], { CC_MONITOR_PORT: '99999' }, warn).port, 4888);
-  assert.equal(parseArgs([], { CC_MONITOR_PORT: 'abc' }, warn).port, 4888);
-  assert.equal(parseArgs([], { CC_MONITOR_PORT: '-1' }, warn).port, 4888);
+  assert.equal(parseArgs([], { CLAUDE_CITY_PORT: '99999' }, warn).port, 4888);
+  assert.equal(parseArgs([], { CLAUDE_CITY_PORT: 'abc' }, warn).port, 4888);
+  assert.equal(parseArgs([], { CLAUDE_CITY_PORT: '-1' }, warn).port, 4888);
   assert.equal(parseArgs(['--port', '99999'], {}, warn).port, 4888);
   assert.equal(warned.length, 4);
   assert.match(warned[0], /99999/);
   // 0 means "any free port" and is legal from both sources.
-  assert.equal(parseArgs([], { CC_MONITOR_PORT: '0' }, warn).port, 0);
+  assert.equal(parseArgs([], { CLAUDE_CITY_PORT: '0' }, warn).port, 0);
   assert.equal(parseArgs(['--port', '0'], {}, warn).port, 0);
-  assert.equal(parseArgs([], { CC_MONITOR_PORT: '4000' }, warn).port, 4000);
+  assert.equal(parseArgs([], { CLAUDE_CITY_PORT: '4000' }, warn).port, 4000);
   assert.equal(warned.length, 4);   // nothing above warned
+});
+
+test('the old CC_MONITOR_* names still work, and CLAUDE_CITY_* wins when both are set', () => {
+  const quiet = () => {};
+  const legacy = parseArgs([], { CC_MONITOR_HOST: '10.0.0.7', CC_MONITOR_PORT: '5100', CC_MONITOR_CLAUDE_DIR: '/tmp/old' }, quiet);
+  assert.deepEqual(legacy, { host: '10.0.0.7', port: 5100, claudeDir: '/tmp/old' });
+  const both = parseArgs([], { CLAUDE_CITY_PORT: '5200', CC_MONITOR_PORT: '5100', CLAUDE_CITY_HOST: '', CC_MONITOR_HOST: '10.0.0.7' }, quiet);
+  assert.equal(both.port, 5200);
+  assert.equal(both.host, '10.0.0.7', 'an empty new name falls back to the old one');
 });

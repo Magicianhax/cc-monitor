@@ -34,7 +34,7 @@ test('redact leaves ordinary text, paths and commands alone', () => {
   const plain = [
     'ls -la /f/Tools',
     '/home/alex/.local/bin/node server.mjs --host 0.0.0.0',
-    'C:/Users/alex/AppData/Local/Temp/claude/cc-monitor/lib/store.mjs',
+    'C:/Users/alex/AppData/Local/Temp/claude/claude-city/lib/store.mjs',
     'Edit public/game/city-scene.mjs',
     'rotate the ssh key next week',
     'npm run verify',

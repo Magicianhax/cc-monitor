@@ -1,13 +1,13 @@
-# cc-monitor
+# Claude City
 
 **Watch every Claude Code session on your machine as a living pixel-art city.**
 
-[![CI](https://github.com/Magicianhax/cc-monitor/actions/workflows/ci.yml/badge.svg)](https://github.com/Magicianhax/cc-monitor/actions/workflows/ci.yml)
+[![CI](https://github.com/Magicianhax/claude-city/actions/workflows/ci.yml/badge.svg)](https://github.com/Magicianhax/claude-city/actions/workflows/ci.yml)
 ![Node](https://img.shields.io/badge/node-%E2%89%A520-3c873a)
 ![Runtime deps](https://img.shields.io/badge/runtime%20deps-0-blue)
 [![License: MIT](https://img.shields.io/badge/license-MIT-lightgrey)](LICENSE)
 
-![cc-monitor: an isometric pixel city with three live Claude Code sessions, and a side panel listing sessions, running agents and a live activity feed](docs/screenshots/overview.png)
+![claude-city: an isometric pixel city with three live Claude Code sessions, and a side panel listing sessions, running agents and a live activity feed](docs/screenshots/overview.png)
 
 Every session is a house. Its agents and subagents are citizens who walk across town to do their
 work: the **Library** when they read or search, the **Forge** when they edit files, the **Server hall**
@@ -20,41 +20,51 @@ per minute, cost, how full each context window is, and a live feed of every tool
 Everything runs locally. There is no account, no telemetry and no build step, and the server has no
 runtime dependencies.
 
+## Install as a Claude Code plugin
+
+In Claude Code:
+
+```
+/plugin marketplace add Magicianhax/claude-city
+/plugin install cc-city@claude-city
+```
+
+Start a new session (or run `/reload-plugins`). The first session starts the city and tells you where
+it is: <http://127.0.0.1:4888>. From then on, every Claude Code session on the machine reports into
+it. The hooks run asynchronously, so they never slow a session down.
+
+Requirements: Node ≥ 20 on your PATH. [docs/INSTALL.md](docs/INSTALL.md) covers updating, the
+exact context-window figure, installing without the plugin, and watching from your phone.
+
 ## Try it in ten seconds
 
 You don't need Claude Code running to see it. The demo fills a throwaway `.claude` folder with
 fictional sessions and keeps them busy:
 
 ```sh
-git clone https://github.com/Magicianhax/cc-monitor.git
-cd cc-monitor
+git clone https://github.com/Magicianhax/claude-city.git
+cd claude-city
 npm run demo
 ```
 
 Open <http://127.0.0.1:4890>. Press Ctrl+C to stop; the demo deletes its temp folder on the way out.
 Every screenshot in this README comes from the demo, so every name and path in them is made up.
 
-## Watch your own sessions
+## Without the plugin
 
 ```sh
 node server.mjs
 ```
 
-Open <http://127.0.0.1:4888>. Any Claude Code session that is running shows up within a few seconds,
-because the server reads the transcripts under `~/.claude` directly.
-
-For exact tool timings, subagent lifecycles, context-window percentages and guard events, add the
-hooks: one paste into `~/.claude/settings.json`. With the hooks in place, the server also starts by
-itself whenever a Claude Code session starts. See **[docs/INSTALL.md](docs/INSTALL.md)**, which covers
-Windows, macOS, Linux and watching from your phone.
-
-Requirements: Node ≥ 20, `curl`, and a POSIX shell for the hooks (Git Bash on Windows).
+Open <http://127.0.0.1:4888>. Running sessions show up within a few seconds, because the server reads
+the transcripts under `~/.claude` directly. Adding the hooks by hand gives the same detail as the
+plugin; [docs/INSTALL.md](docs/INSTALL.md) has the snippet.
 
 ## What you're looking at
 
 | In the city | Means |
 |---|---|
-| A house with a sign | A session, named after its project, with a context bar (`ctx 42%`) and a coin stack for its cost |
+| A house with a sign | A session, named after its project, with a context bar (`ctx 42%`, estimated from the transcript) and a coin stack for its cost |
 | A citizen walking to the **Library** | `Read`, `Grep`, `Glob` |
 | … at the **Forge** | `Edit`, `Write`, `NotebookEdit` |
 | … at the **Server hall** | `Bash`, `PowerShell` |
@@ -89,9 +99,9 @@ processes, recent prompts and hook events. Finished sessions can be replayed fro
 
 | | Process listing | Hooks | Verified |
 |---|---|---|---|
-| Windows 11 | `pwsh` (`Get-CimInstance Win32_Process`) | Git Bash `sh` | End to end |
-| Linux | `ps -axo pid=,ppid=,lstart=,comm=,args=` | `/bin/sh` | End to end on Ubuntu 24.04, and in CI |
-| macOS | the same `ps` command | `/bin/sh` | Test suite in CI. The `ps` parser is tested against real macOS output, but nobody has run the full tool on a Mac yet |
+| Windows 11 | `pwsh` (`Get-CimInstance Win32_Process`) | Node | End to end |
+| Linux | `ps -axo pid=,ppid=,lstart=,comm=,args=` | Node | End to end on Ubuntu 24.04, and in CI |
+| macOS | the same `ps` command | Node | Test suite in CI. The `ps` parser is tested against real macOS output, but nobody has run the full tool on a Mac yet |
 
 ## Privacy and security
 
@@ -115,7 +125,7 @@ Known gaps are listed in [SECURITY.md](SECURITY.md), with how to report a vulner
 ## How it works
 
 ```
-Claude Code hooks ──curl POST──▶ ┐
+Claude Code hooks ──POST──▶      ┐
 ~/.claude transcripts ──tail──▶  ├── server.mjs ──SSE──▶ browser: Phaser city + panel
 OS process table ──poll──▶       ┘
 ```
@@ -165,4 +175,4 @@ environment or a `.env` file and never prints it.
 
 ## License
 
-[MIT](LICENSE). cc-monitor is a community project and is not affiliated with Anthropic.
+[MIT](LICENSE). Claude City is a community project. It is not made, endorsed or supported by Anthropic.

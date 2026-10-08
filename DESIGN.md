@@ -1,4 +1,4 @@
-# cc-monitor design
+# claude-city design
 
 ## Overview
 An isometric pixel-art town of every running Claude Code session, drawn on a 2D canvas at integer scale, with a persistent information panel on the right. Tone: warm, toy-like, calm. References: Animal Crossing, Overcooked, Untitled Goose Game. Not: neon, glass, gradients, HUD sci-fi.

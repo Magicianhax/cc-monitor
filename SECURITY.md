@@ -1,6 +1,6 @@
 # Security
 
-cc-monitor reads data that can be sensitive: your prompts, file paths, shell commands and process
+claude-city reads data that can be sensitive: your prompts, file paths, shell commands and process
 command lines. It is built to keep that data on your machine and away from anything else running in
 your browser.
 

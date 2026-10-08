@@ -350,7 +350,7 @@ function setConnected(on) {
   // Losing the server is the one event the page must announce, and several
   // screen readers never announce a live region that was `hidden` when its
   // text changed. #live is always rendered; the banner is the visual half.
-  $('live').textContent = on ? '' : 'Lost the cc-monitor server. Reconnecting…';
+  $('live').textContent = on ? '' : 'Lost the claude-city server. Reconnecting…';
 }
 
 // ------------------------------------------------------------------ replay

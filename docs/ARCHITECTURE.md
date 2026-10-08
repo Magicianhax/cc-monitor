@@ -4,7 +4,7 @@
 
 ```mermaid
 flowchart LR
-  cc[Claude Code sessions] -- hooks (curl POST) --> srv[server.mjs]
+  cc[Claude Code sessions] -- hooks (node forward.mjs, async POST) --> srv[server.mjs]
   home[(~/.claude transcripts, sessions, teams, guard.log)] -- tail / watch --> srv
   os[OS process table] -- poll --> srv
   srv -- SSE /events --> page[public/ page: Phaser city + info panel]
@@ -18,7 +18,8 @@ flowchart LR
 | Ingest | `lib/ingest.mjs`, `lib/tail.mjs`, `lib/transcript.mjs`, `lib/procs.mjs` | Node ≥ 20 | reading `~/.claude`, hook payloads, process tree |
 | Store | `lib/store.mjs`, `lib/cost.mjs`, `lib/prices.json` | Node | in-memory model, aggregation, cost, change events |
 | Server | `server.mjs` | Node `node:http` | `/hook`, `/status`, `/events` (SSE), `/api/*`, static |
-| Hooks | `hooks/*.sh` | POSIX sh + curl (Git Bash on Windows) | never-block bridge from Claude Code |
+| Hooks | `hooks/forward.mjs`, `hooks/start.mjs`, `hooks/hooks.json` | Node (plugin hooks, async) | never-block bridge from Claude Code; starts the server on SessionStart |
+| Plugin | `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` | Claude Code plugin system | installs the hooks as `cc-city@claude-city` |
 | City | `public/game/` | Phaser 3 (importmap from jsdelivr), easystar.js, Tiled JSON map | the scene: buildings, citizens, cars, guard |
 | Panel | `public/app.mjs`, `public/index.html` | vanilla ESM | SSE client, sessions list, now-view, activity feed, detail, replay |
 | Art pipeline | `tools/gen-art.mjs`, `tools/prep-art.mjs` | Node + OpenAI Images + pngjs | generate sheets, chroma-key, atlas JSON |

@@ -1,18 +1,18 @@
 {
-  "name": "cc-monitor",
-  "version": "1.0.0",
+  "name": "claude-city",
+  "version": "1.1.0",
   "description": "Watch every Claude Code session on your machine as a living pixel-art city.",
   "private": true,
   "type": "module",
   "license": "MIT",
   "author": "Magicianhax",
-  "homepage": "https://github.com/Magicianhax/cc-monitor#readme",
+  "homepage": "https://github.com/Magicianhax/claude-city#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Magicianhax/cc-monitor.git"
+    "url": "git+https://github.com/Magicianhax/claude-city.git"
   },
   "bugs": {
-    "url": "https://github.com/Magicianhax/cc-monitor/issues"
+    "url": "https://github.com/Magicianhax/claude-city/issues"
   },
   "keywords": [
     "claude-code",
@@ -23,7 +23,8 @@
     "monitoring",
     "pixel-art",
     "phaser",
-    "isometric"
+    "isometric",
+    "claude-code-plugin"
   ],
   "scripts": {
     "start": "node server.mjs",

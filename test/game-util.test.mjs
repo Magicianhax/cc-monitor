@@ -72,7 +72,7 @@ test('truncate adds one ellipsis and never exceeds n', () => {
 });
 
 test('cwdTail reads the last segments of either separator', () => {
-  assert.equal(cwdTail('C:\\work\\cc-monitor\\feat-city'), 'cc-monitor/feat-city');
+  assert.equal(cwdTail('C:\\work\\claude-city\\feat-city'), 'claude-city/feat-city');
   assert.equal(cwdTail('/home/me/projects/app', 1), 'app');
   assert.equal(cwdTail(''), '');
 });
@@ -215,26 +215,26 @@ test('pickCitizens never spawns a finished agent and tolerates an empty session'
 
 test('sessionLabel falls back from name to cwd tail to a short id', () => {
   assert.equal(sessionLabel({ name: 'shop-api', cwd: 'C:/work/shop', id: 'abc123' }), 'shop-api');
-  assert.equal(sessionLabel({ name: '   ', cwd: 'C:/work/cc-monitor/feat-city', id: 'abc' }), 'feat-city');
+  assert.equal(sessionLabel({ name: '   ', cwd: 'C:/work/claude-city/feat-city', id: 'abc' }), 'feat-city');
   assert.equal(sessionLabel({ name: null, cwd: '', id: '0ea8cc94-696b-48a7-9917' }), '0ea8cc94');
   assert.equal(sessionLabel({}), 'session');
   assert.equal(sessionLabel(undefined), 'session');
 });
 
 test('citizenPlate names the tool when working and only the agent when idle', () => {
-  const session = { name: 'cc-monitor', id: 's1' };
+  const session = { name: 'claude-city', id: 's1' };
   assert.deepEqual(
     citizenPlate(session, { id: 'main', kind: 'main', state: 'running', tool: { name: 'Edit', summary: 'public/game/util.mjs' } }),
-    ['cc-monitor · main', 'Edit · public/game/util.mjs'],
+    ['claude-city · main', 'Edit · public/game/util.mjs'],
   );
   // Idle is one line: a park full of second lines reading "idle" says nothing.
-  assert.deepEqual(citizenPlate(session, { id: 'impl-task-3', state: 'idle' }), ['cc-monitor · impl-task-3']);
+  assert.deepEqual(citizenPlate(session, { id: 'impl-task-3', state: 'idle' }), ['claude-city · impl-task-3']);
   // A running agent between tools has nothing to report either.
-  assert.deepEqual(citizenPlate(session, { id: 'a', label: 'doc-writer', state: 'running', tool: null }), ['cc-monitor · doc-writer']);
+  assert.deepEqual(citizenPlate(session, { id: 'a', label: 'doc-writer', state: 'running', tool: null }), ['claude-city · doc-writer']);
   // A tool with no summary still names itself.
   assert.deepEqual(
     citizenPlate(session, { id: 'a', label: 'x', state: 'running', tool: { name: 'Bash' } }),
-    ['cc-monitor · x', 'Bash'],
+    ['claude-city · x', 'Bash'],
   );
   // And the label follows the same nameless-session fallback as the house sign.
   assert.deepEqual(citizenPlate({ id: 'deadbeef-1111', cwd: '' }, { id: 'main', kind: 'main', state: 'idle' }), ['deadbeef · main']);
