@@ -1,7 +1,8 @@
 // Generate reference art and sprite sources with OpenAI's newest image model.
 // Usage: node tools/gen-art.mjs [name ...]   (no names = all)
 // Reads OPENAI_API_KEY from env, else from ../.env.local, else ./.env (never prints it).
-// Output: public/assets/raw/<name>.png (git-ignored) + public/assets/raw/manifest.json
+// Output: public/assets/raw/<name>.png + public/assets/raw/manifest.json. The raw sheets are kept on
+// the `assets` branch, not main: git fetch origin assets && git restore --source=FETCH_HEAD -- public/assets/raw
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';

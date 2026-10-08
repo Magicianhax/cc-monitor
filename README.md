@@ -7,7 +7,7 @@
 ![Runtime deps](https://img.shields.io/badge/runtime%20deps-0-blue)
 [![License: MIT](https://img.shields.io/badge/license-MIT-lightgrey)](LICENSE)
 
-![claude-city: an isometric pixel city with three live Claude Code sessions, and a side panel listing sessions, running agents and a live activity feed](docs/screenshots/overview.png)
+![claude-city: an isometric pixel city with three live Claude Code sessions, and a side panel listing sessions, running agents and a live activity feed](https://raw.githubusercontent.com/Magicianhax/claude-city/assets/docs/screenshots/overview.png)
 
 Every session is a house. Its agents and subagents are citizens who walk across town to do their
 work: the **Library** when they read or search, the **Forge** when they edit files, the **Server hall**
@@ -81,8 +81,8 @@ Body colour shows the model: Fable is terracotta, Opus wood, Sonnet blue, Haiku 
 
 <table>
 <tr>
-<td width="62%"><img src="docs/screenshots/closeup.png" alt="Close-up of the town centre: agents at the Forge and the Library with name plates showing their current tool, a truck on the road, market stalls and apartments"></td>
-<td width="38%"><img src="docs/screenshots/phone.png" alt="The same city on a phone, with the panel as a bottom sheet listing what each agent is doing"></td>
+<td width="62%"><img src="https://raw.githubusercontent.com/Magicianhax/claude-city/assets/docs/screenshots/closeup.png" alt="Close-up of the town centre: agents at the Forge and the Library with name plates showing their current tool, a truck on the road, market stalls and apartments"></td>
+<td width="38%"><img src="https://raw.githubusercontent.com/Magicianhax/claude-city/assets/docs/screenshots/phone.png" alt="The same city on a phone, with the panel as a bottom sheet listing what each agent is doing"></td>
 </tr>
 <tr>
 <td>Zoomed in: each plate reads <code>session · agent</code> over <code>tool · what it is touching</code>.</td>
@@ -90,7 +90,7 @@ Body colour shows the model: Fable is terracotta, Opus wood, Sonnet blue, Haiku 
 </tr>
 </table>
 
-![A selected session: its house is outlined, and the panel shows a token breakdown, cost, its four agents, its processes and its recent prompts](docs/screenshots/selected.png)
+![A selected session: its house is outlined, and the panel shows a token breakdown, cost, its four agents, its processes and its recent prompts](https://raw.githubusercontent.com/Magicianhax/claude-city/assets/docs/screenshots/selected.png)
 
 *Click a house, a citizen or a session row for the details: tokens by kind, estimated cost, agents,
 processes, recent prompts and hook events. Finished sessions can be replayed from their transcripts.*
@@ -147,10 +147,12 @@ npm run demo       # fictional sessions on port 4890
                    # http://127.0.0.1:4888/dev.html shows the city alone, driven by a static fixture
 ```
 
-The city is generated, processed and committed, so a clone needs none of the steps below. Run them
-only if you want a different city:
+The packed atlases and the map are committed, so a clone needs none of the steps below. Run them only
+if you want a different city. The raw sprite sheets live on the `assets` branch, which keeps plugin
+installs small, so fetch them first:
 
 ```sh
+git fetch origin assets && git restore --source=FETCH_HEAD -- public/assets/raw
 node tools/gen-art.mjs <sheet>   # regenerate a sprite sheet with OpenAI Images (needs OPENAI_API_KEY)
 npm run art:prep                 # chroma-key, trim and pack the sheets into public/assets/atlas
 npm run map:build                # build the Tiled map from the ASCII layout in lib/citymap.mjs

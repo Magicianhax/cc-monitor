@@ -4,3 +4,8 @@ node_modules/
 .env
 .env.*
 .impeccable/
+
+# Raw sprite sheets and README screenshots live on the 'assets' branch, so installs stay small.
+# Restore the sheets: git fetch origin assets && git restore --source=FETCH_HEAD -- public/assets/raw
+public/assets/raw/
+docs/screenshots/
