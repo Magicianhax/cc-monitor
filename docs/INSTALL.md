@@ -8,14 +8,14 @@ is **Node ≥ 20** on your PATH (`node -v`). There is nothing to `npm install`.
 In Claude Code:
 
 ```
-/plugin marketplace add Magicianhax/claude-city
+/plugin marketplace add https://github.com/Magicianhax/claude-city.git
 /plugin install cc-city@claude-city
 ```
 
 Or from a terminal:
 
 ```sh
-claude plugin marketplace add Magicianhax/claude-city
+claude plugin marketplace add https://github.com/Magicianhax/claude-city.git
 claude plugin install cc-city@claude-city
 ```
 
@@ -24,6 +24,8 @@ starts the server and tells you where it is: <http://127.0.0.1:4888>. Every sess
 into the same server.
 
 The plugin is called `cc-city` because Claude Code reserves plugin names that start with `claude-`.
+The short form `/plugin marketplace add Magicianhax/claude-city` also works, but it clones over SSH,
+so it needs an SSH key registered with GitHub. The HTTPS URL above works for everyone.
 
 What the plugin adds:
 
@@ -142,6 +144,8 @@ in one place, for example under `env` in `~/.claude/settings.json`. The pre-rena
 
 ## Troubleshooting
 
+- **`Permission denied (publickey)` when adding the marketplace.** You used the `owner/repo` short
+  form, which clones over SSH. Use the HTTPS URL instead.
 - **The city is empty.** Check that the server is up: `curl -s http://127.0.0.1:4888/api/sessions`.
   Then start a new Claude Code session. With the plugin, `/plugin` should list `cc-city` as enabled.
 - **`port 4888 in use (another claude-city?)`.** One is already running. That is normal, and the

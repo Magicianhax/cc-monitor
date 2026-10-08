@@ -25,7 +25,7 @@ runtime dependencies.
 In Claude Code:
 
 ```
-/plugin marketplace add Magicianhax/claude-city
+/plugin marketplace add https://github.com/Magicianhax/claude-city.git
 /plugin install cc-city@claude-city
 ```
 

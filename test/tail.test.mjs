@@ -113,3 +113,25 @@ test('truncation resets the decoder, not just the offset', async () => {
     t.close();
   }
 });
+
+test('a huge backlog is read in slices, so the event loop stays responsive and order is kept', async () => {
+  const f = join(dir, 'big.jsonl');
+  const line = 'x'.repeat(200);
+  const total = 60000; // ~12 MB
+  writeFileSync(f, Array.from({ length: total }, (_, i) => `${i} ${line}`).join('\n') + '\n');
+  const t = new Tailer({ pollMs: 50, chunkBytes: 64 * 1024, sliceMs: 5 });
+  try {
+    let seen = 0;
+    let inOrder = true;
+    t.on('line', (p, l) => { if (Number(l.slice(0, l.indexOf(' '))) !== seen) inOrder = false; seen += 1; });
+    t.add(f, { fromStart: true });
+    // A timer due in 10 ms must not wait for the whole file.
+    const lag = await new Promise((resolve) => { const s = Date.now(); setTimeout(() => resolve(Date.now() - s), 10); });
+    assert.ok(lag < 150, `timer delayed ${lag} ms by the backlog`);
+    assert.ok(seen < total, 'the backlog was not read in one go');
+    const deadline = Date.now() + 10000;
+    while (seen < total && Date.now() < deadline) await wait(20);
+    assert.equal(seen, total);
+    assert.ok(inOrder, 'lines arrive in file order');
+  } finally { t.close(); }
+});

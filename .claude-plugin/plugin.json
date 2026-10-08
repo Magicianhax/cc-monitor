@@ -1,7 +1,7 @@
 {
   "name": "cc-city",
   "displayName": "Claude City",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Watch every Claude Code session on your machine as a living pixel-art city: agents walk to the Library, Forge and Server hall for their tools, shells drive as cars, and a live panel narrates tokens, cost and every tool call. Opens at http://127.0.0.1:4888.",
   "author": {
     "name": "Magicianhax",
