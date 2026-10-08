@@ -8,6 +8,9 @@ import { Tailer } from '../lib/tail.mjs';
 import { startIngest, readRegistry, readWorkflows, transcriptFiles } from '../lib/ingest.mjs';
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+// macOS FSEvents also reports writes made just before a watcher starts. Tests that assert a file
+// written before startIngest() is *not* picked up by the watcher let those events drain first.
+const settleBeforeWatch = () => wait(process.platform === 'darwin' ? 1500 : 0);
 function fakeClaudeDir() {
   const d = mkdtempSync(join(tmpdir(), 'cc-claude-'));
   for (const sub of ['sessions', 'teams', 'hooks', 'projects/F--x/sess-1/subagents', 'projects/F--x/sess-1/workflows']) mkdirSync(join(d, sub), { recursive: true });
@@ -77,6 +80,7 @@ test('stop() cancels a pending debounced refresh', async () => {
     // registry refresh can reach it. Nothing under projects/ changes after start.
     mkdirSync(join(d, 'projects/F--z'), { recursive: true });
     writeFileSync(join(d, 'projects/F--z/sess-9.jsonl'), usageLine('sess-9', 'claude-opus-5'));
+    await settleBeforeWatch();
     const store = new Store();
     const tailer = new Tailer({ pollMs: 50 });
     h = startIngest({ store, claudeDir: d, tailer, procPoller: noProcs });
@@ -100,6 +104,7 @@ test('a registry refresh re-tracks nothing for a known session and still picks u
     writeFileSync(join(d, 'sessions/11.json'), JSON.stringify({ pid: 11, sessionId: 'sess-1', cwd: 'F:/x', status: 'busy' }));
     writeFileSync(join(d, 'projects/F--x/sess-1.jsonl'), usageLine('sess-1', 'claude-opus-5'));
     writeFileSync(join(d, 'projects/F--x/sess-1/workflows/wf_1.json'), JSON.stringify({ runId: 'wf_1', script: "export const meta = { name: 'osint', phases: [] }" }));
+    await settleBeforeWatch();
     const store = new Store();
     const applyWorkflow = store.applyWorkflow.bind(store);
     let workflowReads = 0;                                       // a re-walk of projects/ re-reads every wf_*.json
