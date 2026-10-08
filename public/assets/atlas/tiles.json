@@ -1,0 +1,52 @@
+{
+  "frames": {
+    "grass": {
+      "frame": {
+        "x": 1,
+        "y": 1,
+        "w": 64,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 32
+      }
+    },
+    "path": {
+      "frame": {
+        "x": 1,
+        "y": 34,
+        "w": 64,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 32
+      }
+    }
+  },
+  "meta": {
+    "image": "tiles.png",
+    "size": {
+      "w": 128,
+      "h": 67
+    },
+    "scale": 1
+  }
+}

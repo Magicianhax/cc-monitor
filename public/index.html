@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#cfe8f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1b2430" media="(prefers-color-scheme: dark)">
+<title>Claude city</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&family=Fredoka:wght@600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* ---------------------------------------------------------------- palette */
+/* DESIGN.md "Colors". The scene reads the same tokens back off :root, so the
+   canvas and the panel can never drift apart. */
+:root {
+  /* Declared, so the scrollbars, the range track and every other piece of
+     browser chrome flip with the page instead of staying light on --paper. */
+  color-scheme: light;
+
+  --sky:#cfe8f3; --grass:#8fcf6b; --grass-2:#7bbd5a; --wood:#c98a4b; --roof:#e0694b;
+  --stone:#b9b3a8; --ink:#2b2620; --paper:#fbf7ef; --coin:#f2c14e;
+  --ok:#58b368; --warn:#e8a838; --bad:#d9534f; --water:#1f4e6b;
+
+  /* The dark palette, written once. Both dark selectors below only map the
+     tokens onto these, so a colour is edited in one place rather than two
+     blocks that must be kept in lockstep forever. */
+  --d-sky:#1b2430; --d-grass:#4f8a3f; --d-grass-2:#3f7333; --d-wood:#9a6a3a; --d-roof:#b5533a;
+  --d-stone:#6f6a62; --d-ink:#f2ede4; --d-paper:#262d38; --d-coin:#d9a93a;
+  --d-water:#123a52; --d-bad-t:#ff8a85; --d-warn-t:#f0c24e;
+
+  /* Tool families in the feed are an ink ramp, not six hues. DESIGN.md allows
+     one accent, --roof, and saturated colour is kept for the three things that
+     mean something: selection, a block and a warning. The model-family hues
+     belong to the sprites and the chips, and --fam-file used to be byte
+     identical to --roof while --fam-read was the Sonnet body colour. */
+  --fam-file:   color-mix(in srgb, var(--ink) 92%, var(--paper));
+  --fam-read:   color-mix(in srgb, var(--ink) 74%, var(--paper));
+  --fam-shell:  color-mix(in srgb, var(--ink) 58%, var(--paper));
+  --fam-web:    color-mix(in srgb, var(--ink) 44%, var(--paper));
+  --fam-agent:  color-mix(in srgb, var(--ink) 30%, var(--paper));
+  --fam-other:  color-mix(in srgb, var(--ink) 20%, var(--paper));
+  --bad-t:#b02722; --warn-t:#8a5a05;
+
+  /* Three weights, so a row separator, a header underline and the edge of a
+     whole section are not all the same hairline. */
+  --line-row:     color-mix(in srgb, var(--ink) 8%, transparent);
+  --line-head:    color-mix(in srgb, var(--ink) 16%, transparent);
+  --line-section: color-mix(in srgb, var(--ink) 32%, transparent);
+
+  /* Data is 13 px; 12 px is the metadata step under it and 11 px is for the
+     uppercase micro-labels and chips. Nothing else. */
+  --t-data: 13px; --t-meta: 12px; --t-micro: 11px;
+  --track-caps: .09em;
+  --dim: .72;
+
+  --z-sticky: 10; --z-replay: 20; --z-banner: 30;
+  --panel-w: 380px;
+  --strip-h: 34px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --sky:var(--d-sky); --grass:var(--d-grass); --grass-2:var(--d-grass-2);
+    --wood:var(--d-wood); --roof:var(--d-roof); --stone:var(--d-stone);
+    --ink:var(--d-ink); --paper:var(--d-paper); --coin:var(--d-coin);
+    --water:var(--d-water); --bad-t:var(--d-bad-t); --warn-t:var(--d-warn-t);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --sky:var(--d-sky); --grass:var(--d-grass); --grass-2:var(--d-grass-2);
+  --wood:var(--d-wood); --roof:var(--d-roof); --stone:var(--d-stone);
+  --ink:var(--d-ink); --paper:var(--d-paper); --coin:var(--d-coin);
+  --water:var(--d-water); --bad-t:var(--d-bad-t); --warn-t:var(--d-warn-t);
+}
+
+/* ------------------------------------------------------------------ frame */
+/* No 300 ms double-tap-zoom delay on a session row or a panel button. */
+* { box-sizing: border-box; touch-action: manipulation; }
+html, body {
+  margin: 0; height: 100%; overflow: hidden;
+  background: var(--sky); color: var(--ink);
+  font: 400 var(--t-data)/1.45 "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  font-variant-numeric: tabular-nums;
+}
+h1, h2, h3 { font-family: Fredoka, Nunito, system-ui, sans-serif; font-weight: 700; margin: 0; }
+button { font: inherit; color: inherit; }
+/* One focus ring for the whole page. Nothing sets outline: none; without this
+   the seven controls that are not a session row fall back to the UA ring, which
+   on --paper in dark mode is both low contrast and unrelated to everything. */
+button:focus-visible, input:focus-visible { outline: 2px solid var(--roof); outline-offset: 1px; }
+/* A minimum a thumb can hit. DESIGN.md's phone is a primary surface. */
+.sec button, #replay button, #detail .act button { min-height: 28px; }
+
+/* The canvas runs its own pinch and pan, and everything it draws is in the
+   panel as text, so assistive tech reads the panel rather than an opaque
+   picture. `aria-hidden` lives on the element itself. */
+#scene { position: fixed; left: 0; top: 0; bottom: 0; right: var(--panel-w); touch-action: none; }
+#scene canvas { display: block; image-rendering: pixelated; }
+
+/* The one thing on the page that must be announced, always rendered so that a
+   screen reader is watching it before the server goes away. */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------ panel */
+#panel {
+  position: fixed; top: 0; right: 0; bottom: 0; width: var(--panel-w);
+  display: flex; flex-direction: column; min-height: 0;
+  background: var(--paper); border-left: 2px solid var(--ink);
+}
+#p-head { flex: none; padding: 12px 16px; border-bottom: 1px solid var(--line-head); }
+#p-head h1 { font-size: 15px; }
+#p-head .sub { font-size: var(--t-meta); opacity: var(--dim); margin-top: 1px; }
+.nums { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
+.num { min-width: 0; }
+.num b {
+  display: block; font-family: Fredoka, Nunito, system-ui, sans-serif; font-weight: 700;
+  font-size: 22px; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.num span { display: block; font-size: var(--t-micro); opacity: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* An overscroll past the end of the panel stops here rather than chaining to
+   the document behind it. */
+#p-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; }
+section { border-bottom: 1px solid var(--line-section); }
+.sec {
+  display: flex; align-items: center; gap: 8px;
+  position: sticky; top: 0; z-index: var(--z-sticky);
+  padding: 6px 16px; background: var(--paper);
+  font-size: var(--t-meta); letter-spacing: var(--track-caps); text-transform: uppercase;
+  border-bottom: 1px solid var(--line-head);
+}
+.sec .count { font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: var(--t-meta); opacity: var(--dim); letter-spacing: 0; }
+.sec .spacer { flex: 1; }
+.sec button {
+  border: 1px solid var(--ink); background: transparent; border-radius: 6px;
+  font-size: var(--t-micro); padding: 1px 8px; cursor: pointer;
+}
+.empty-row { padding: 8px 16px; font-size: var(--t-data); opacity: var(--dim); }
+
+/* ---------------------------------------------------------- session rows */
+/* The 16 -> 13 px left inset is the one asymmetry: it pays for the 3 px accent
+   border, so the text still starts at 16 px like every other section. */
+.srow {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  border: 0; border-bottom: 1px solid var(--line-row); border-left: 3px solid transparent;
+  background: transparent; padding: 8px 16px 8px 13px;
+  /* Ninety rows when the finished list is open, and a sticky header over them. */
+  content-visibility: auto; contain-intrinsic-size: auto 62px; scroll-margin-top: 30px;
+}
+.srow:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.srow:focus-visible { outline: 2px solid var(--roof); outline-offset: -2px; }
+.srow.on { border-left-color: var(--roof); background: color-mix(in srgb, var(--roof) 12%, transparent); }
+.srow.dead .nm { opacity: var(--dim); }
+.srow .top { display: flex; align-items: center; gap: 6px; }
+.srow .nm { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chip {
+  flex: none; font-size: var(--t-micro); line-height: 1.5; padding: 0 5px; border-radius: 6px;
+  border: 1px solid color-mix(in srgb, var(--ink) 45%, transparent);
+}
+.srow .cwd { font-size: var(--t-meta); opacity: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* Four figures of dollars plus a token count can outgrow 380 px, so the row is
+   allowed a second line rather than breaking a number across one. */
+.srow .met { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; margin-top: 3px; font-size: var(--t-data); }
+.srow .met > * { white-space: nowrap; }
+/* A health bar, so the fill is what is left. An unknown context has no bar at
+   all: an empty frame reads as "none used", the opposite of "unknown". */
+.bar { flex: none; width: 54px; height: 6px; border: 1px solid var(--ink); position: relative; }
+.bar i { position: absolute; inset: 0; display: block; }
+.bar i.ok { background: var(--ok); } .bar i.warn { background: var(--warn); } .bar i.bad { background: var(--bad); }
+.g { opacity: var(--dim); }
+.srow .el { margin-left: auto; flex: none; font-size: var(--t-meta); opacity: var(--dim); }
+
+/* ----------------------------------------------------------- happening now */
+.nrow {
+  padding: 6px 16px; border-bottom: 1px solid var(--line-row);
+  /* The running dot pulses forever; off-screen rows should not composite it. */
+  content-visibility: auto; contain-intrinsic-size: auto 40px; scroll-margin-top: 30px;
+}
+.nrow .l1 { display: flex; align-items: center; gap: 6px; }
+.nrow .who { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nrow .l2 { display: flex; font-size: var(--t-data); margin-top: 1px; white-space: nowrap; }
+.nrow .t2 { flex: none; max-width: 60%; overflow: hidden; text-overflow: ellipsis; }
+.nrow .s2 { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; opacity: var(--dim); }
+.nrow .el { margin-left: auto; flex: none; font-size: var(--t-meta); opacity: var(--dim); }
+.dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--stone); display: inline-block; }
+.dot.run { background: var(--ok); animation: pulse 1.6s ease-in-out infinite; }
+.dot.idle { background: var(--warn); }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .28; } }
+
+/* -------------------------------------------------------------------- feed */
+/* No overscroll containment here: the feed is a box inside a scrolling panel,
+   and containing it meant a flick that landed on the feed moved neither. */
+#feed { height: clamp(220px, 40vh, 460px); overflow-y: auto; overflow-x: hidden; }
+/* Two lines, not six columns: at 380 px a single row spends all its width on
+   who did it and leaves nothing for what they did, which is the line that
+   matters. The header line carries time, session and agent; the body line
+   carries the tool and its summary. */
+.frow {
+  display: block; padding: 4px 16px 4px 13px;
+  border-left: 3px solid var(--fam-other);
+  border-bottom: 1px solid var(--line-row); font-size: var(--t-data);
+  scroll-margin-top: 30px;
+}
+.frow .hd { display: flex; gap: 6px; font-size: var(--t-meta); opacity: var(--dim); white-space: nowrap; }
+.frow .bd { display: flex; gap: 6px; white-space: nowrap; }
+.frow .ts { flex: none; }
+.frow .sn { flex: none; max-width: 110px; overflow: hidden; text-overflow: ellipsis; }
+.frow .ag { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.frow .tl { flex: none; font-weight: 700; }
+.frow .sm { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.frow.file { border-left-color: var(--fam-file); }
+.frow.read { border-left-color: var(--fam-read); }
+.frow.shell { border-left-color: var(--fam-shell); }
+.frow.web { border-left-color: var(--fam-web); }
+.frow.agent { border-left-color: var(--fam-agent); }
+.frow.block { border-left-color: var(--bad); color: var(--bad-t); } .frow.block .tl { color: var(--bad-t); }
+.frow.warn { border-left-color: var(--warn); color: var(--warn-t); } .frow.warn .tl { color: var(--warn-t); }
+.frow.you { border-left-color: var(--ink); }
+/* The one row allowed to wrap, and only this far: a four-thousand character
+   paste was sixty lines that pushed the whole feed off screen. */
+.frow.you .sm {
+  white-space: normal; display: -webkit-box; -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden;
+}
+
+/* ------------------------------------------------------------------ detail */
+#detail { padding: 8px 16px 14px; }
+#detail h3 { font-size: 15px; margin-bottom: 2px; }
+#detail .sub { font-size: var(--t-meta); opacity: var(--dim); word-break: break-all; }
+#detail .lbl { font-size: var(--t-micro); letter-spacing: var(--track-caps); text-transform: uppercase; opacity: var(--dim); margin: 12px 0 4px; font-family: Fredoka, Nunito, system-ui, sans-serif; font-weight: 600; }
+#detail table { width: 100%; border-collapse: collapse; font-size: var(--t-data); }
+#detail td { padding: 2px 0; border-bottom: 1px solid var(--line-row); }
+#detail td:last-child { text-align: right; }
+#detail td.big { font-family: Fredoka, Nunito, system-ui, sans-serif; font-weight: 700; font-size: 17px; }
+#detail ul { list-style: none; margin: 0; padding: 0; font-size: var(--t-data); }
+#detail li { padding: 2px 0; border-bottom: 1px solid var(--line-row); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#detail li .t { opacity: var(--dim); margin-right: 6px; }
+#detail li.block { color: var(--bad-t); } #detail li.warn { color: var(--warn-t); }
+#detail .act { margin-top: 12px; }
+#detail .act button { border: 2px solid var(--ink); background: transparent; border-radius: 8px; padding: 3px 10px; cursor: pointer; }
+
+/* ------------------------------------------------------------------- strip */
+/* A single line of four readings in 380 px. The gutter matches every section
+   above it; the inter-item gap is what gives way so it never wraps. */
+#strip {
+  flex: none; display: flex; align-items: center; justify-content: space-between; gap: 6px;
+  padding: 0 16px env(safe-area-inset-bottom, 0px); min-height: var(--strip-h); font-size: var(--t-meta);
+  border-top: 2px solid var(--ink); background: var(--paper);
+}
+#strip > span { white-space: nowrap; }
+#strip .k { opacity: var(--dim); margin-right: 4px; }
+#strip .conn { width: 9px; height: 9px; border-radius: 50%; background: var(--bad); display: inline-block; margin-right: 5px; vertical-align: -1px; }
+#strip .conn.on { background: var(--ok); }
+#strip .err.hot { color: var(--bad-t); font-weight: 700; }
+
+/* ------------------------------------------------------ overlays on canvas */
+#banner {
+  position: fixed; top: 0; left: 0; right: var(--panel-w); z-index: var(--z-banner);
+  padding: calc(7px + env(safe-area-inset-top, 0px)) 16px 7px; text-align: center; font-weight: 700;
+  /* --bad is drawn to sit on grass, so white on it is only 4.0:1. Near-black
+     reaches 4.9:1 and keeps the banner the same red in both themes. */
+  background: var(--bad); color: #1a0a09;
+}
+#empty { position: fixed; left: 0; top: 0; bottom: calc(var(--strip-h) + env(safe-area-inset-bottom, 0px)); right: var(--panel-w); display: grid; place-items: center; text-align: center; pointer-events: none; }
+#empty .sign { background: var(--paper); border: 2px solid var(--ink); border-radius: 12px; padding: 18px 26px; }
+#empty .sign .t { font-family: Fredoka, Nunito, system-ui, sans-serif; font-weight: 700; font-size: 20px; text-wrap: balance; }
+#empty .sign p { margin: 6px 0 0; font-size: var(--t-data); opacity: var(--dim); text-wrap: pretty; }
+#empty code { display: inline-block; margin-top: 8px; border: 1px solid var(--ink); border-radius: 6px; padding: 2px 8px; }
+#replay {
+  position: fixed; left: 16px; right: calc(var(--panel-w) + 16px); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: var(--z-replay);
+  display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 12px;
+  background: var(--paper); border: 2px solid var(--ink); border-radius: 12px;
+}
+#replay button { border: 2px solid var(--ink); background: transparent; border-radius: 8px; padding: 2px 10px; cursor: pointer; }
+#replay .nm { flex: none; font-weight: 700; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#replay input[type=range] { flex: 1 1 auto; min-width: 60px; accent-color: var(--roof); }
+#replay .pos { flex: none; font-size: var(--t-meta); opacity: var(--dim); }
+[hidden] { display: none !important; }
+
+/* -------------------------------------------------------------- bottom sheet */
+@media (max-width: 640px) {
+  #scene { right: 0; bottom: 50%; }
+  #panel { top: 50%; left: 0; width: auto; border-left: 0; border-top: 2px solid var(--ink); }
+  #banner, #empty { right: 0; }
+  #empty { bottom: 50%; }
+  #replay { right: 16px; bottom: calc(50% + 16px); height: 52px; }
+  .nums { gap: 6px; }
+  #feed { height: 220px; }
+  /* Half a phone screen is four sections deep, so the order changes rather
+     than the content: what is happening right now sits directly under the
+     header, where a glance lands, and the lists follow it. Above 640 px the
+     document order stands. */
+  #p-body { display: flex; flex-direction: column; }
+  #p-body > section { flex: none; }
+  #sec-now { order: 1; }
+  #sec-sessions { order: 2; }
+  #sec-feed { order: 3; }
+  #sec-detail { order: 4; }
+  /* Thumbs, not cursors. */
+  .sec button, #replay button, #detail .act button { min-height: 44px; padding: 0 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dot.run { animation: none; }
+}
+</style>
+</head>
+<body>
+<div id="scene" aria-hidden="true"></div>
+
+<div id="empty" hidden>
+  <div class="sign">
+    <div class="t">No Claude running</div>
+    <p>Start a session in any terminal and its house appears here.</p>
+    <code>claude</code>
+  </div>
+</div>
+
+<div id="replay" hidden>
+  <button id="rp-play" type="button">Play</button>
+  <span class="nm" id="rp-name">replay</span>
+  <input id="rp-range" type="range" min="0" max="0" value="0" aria-label="Replay position">
+  <span class="pos" id="rp-pos">0 / 0</span>
+  <button id="rp-close" type="button">Exit</button>
+</div>
+
+<p id="live" class="sr-only" role="status" aria-live="polite"></p>
+<div id="banner" aria-hidden="true" hidden>Lost the cc-monitor server. Reconnecting…</div>
+
+<aside id="panel">
+  <header id="p-head">
+    <h1>Claude city</h1>
+    <div class="sub" id="head-sub">connecting…</div>
+    <div class="nums">
+      <div class="num"><b id="n-sessions">0</b><span>sessions</span></div>
+      <div class="num"><b id="n-agents">0</b><span>agents</span></div>
+      <div class="num"><b id="n-rate">–</b><span>tok/min</span></div>
+      <div class="num"><b id="n-cost">?</b><span>cost</span></div>
+    </div>
+  </header>
+
+  <div id="p-body">
+    <section id="sec-sessions" aria-labelledby="h-sessions">
+      <h2 class="sec" id="h-sessions">Sessions<span class="count" id="c-sessions">0</span><span class="spacer"></span><button id="dead-toggle" type="button" aria-pressed="false" hidden>Show finished</button></h2>
+      <div id="sessions"><div class="empty-row">waiting for the first snapshot…</div></div>
+    </section>
+
+    <section id="sec-now" aria-labelledby="h-now">
+      <h2 class="sec" id="h-now">Happening now<span class="count" id="c-now">0</span></h2>
+      <div id="now"><div class="empty-row">nothing running</div></div>
+    </section>
+
+    <section id="sec-feed" aria-labelledby="h-feed">
+      <h2 class="sec" id="h-feed">Activity<span class="count" id="c-feed">0</span><span class="spacer"></span><button id="feed-pin" type="button" hidden>jump to newest</button></h2>
+      <div id="feed"><div class="empty-row">waiting for activity…</div></div>
+    </section>
+
+    <section id="sec-detail" aria-labelledby="h-detail" hidden>
+      <h2 class="sec" id="h-detail">Detail<span class="spacer"></span><button id="detail-close" type="button">close</button></h2>
+      <div id="detail"></div>
+    </section>
+  </div>
+
+  <footer id="strip">
+    <span><span class="conn" id="conn" aria-hidden="true"></span><span id="conn-txt">offline</span></span>
+    <span><span class="k">tokens</span><b id="t-tokens">–</b></span>
+    <span><span class="k">cost</span><b id="t-cost">?</b></span>
+    <span class="err" id="t-errs-wrap"><span class="k">err</span><b id="t-errs">0</b></span>
+  </footer>
+</aside>
+
+<!-- easystar 0.4.4 ships CommonJS, so the browser build goes in as a classic
+     script and exports window.EasyStar. -->
+<script src="https://cdn.jsdelivr.net/npm/easystarjs@0.4.4/bin/easystar-0.4.4.min.js"
+        integrity="sha384-YEHLV/bd32N9ekaRKMVL8bSPd1BqcwPb6rYJWrlEhQRZZpo4BSfKRa8ktV2MpU98"
+        crossorigin="anonymous"></script>
+<!-- The import map's own integrity section, so the module graph is pinned the
+     same way the classic script above it is. Browsers that do not support it
+     ignore the key rather than failing the map. -->
+<script type="importmap">{
+  "imports": { "phaser": "https://cdn.jsdelivr.net/npm/phaser@3.90.0/dist/phaser.esm.js" },
+  "integrity": { "https://cdn.jsdelivr.net/npm/phaser@3.90.0/dist/phaser.esm.js": "sha384-nfDUnGIGytkEVoWHOa082ZiT/7YZl3dTsbhohBmz2lvy+MbzsT2A7h4nYwsCSctx" }
+}</script>
+<script type="module" src="./app.mjs"></script>
+</body>
+</html>

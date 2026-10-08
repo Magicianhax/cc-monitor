@@ -1,0 +1,179 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>cc-monitor city dev</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&family=Fredoka:wght@600;700&display=swap">
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #cfe8f3; }
+  #scene { position: fixed; inset: 0; }
+  #scene canvas { display: block; image-rendering: pixelated; }
+  #hint {
+    position: fixed; left: 16px; bottom: 16px; z-index: 2;
+    font: 13px/1.5 "JetBrains Mono", ui-monospace, monospace;
+    color: #2b2620; background: #fbf7ef; border: 2px solid #2b2620; border-radius: 12px;
+    padding: 8px 12px; pointer-events: none;
+  }
+</style>
+<div id="scene"></div>
+<p id="hint">drag pan · wheel zoom · double-click centre · f block · w warn · 0 fit</p>
+
+<!-- easystar 0.4.4 ships CommonJS (src/easystar.js uses require), so the
+     browser build goes in as a classic script and exports window.EasyStar. -->
+<script src="https://cdn.jsdelivr.net/npm/easystarjs@0.4.4/bin/easystar-0.4.4.min.js"
+        integrity="sha384-YEHLV/bd32N9ekaRKMVL8bSPd1BqcwPb6rYJWrlEhQRZZpo4BSfKRa8ktV2MpU98"
+        crossorigin="anonymous"></script>
+<script type="importmap">{
+  "imports": { "phaser": "https://cdn.jsdelivr.net/npm/phaser@3.90.0/dist/phaser.esm.js" },
+  "integrity": { "https://cdn.jsdelivr.net/npm/phaser@3.90.0/dist/phaser.esm.js": "sha384-nfDUnGIGytkEVoWHOa082ZiT/7YZl3dTsbhohBmz2lvy+MbzsT2A7h4nYwsCSctx" }
+}</script>
+<script type="module">
+import { createTown } from './game/index.mjs';
+
+const tokens = {
+  sky: '#cfe8f3', grass: '#8fcf6b', grass2: '#7bbd5a', wood: '#c98a4b', roof: '#e0694b',
+  stone: '#b9b3a8', ink: '#2b2620', paper: '#fbf7ef', coin: '#f2c14e',
+  ok: '#58b368', warn: '#e8a838', bad: '#d9534f', water: '#1f4e6b',
+};
+
+// ?reduced=1 makes the fixture answer the reduced-motion query yes, so the
+// teleporting, smokeless path can be checked without OS settings.
+if (new URLSearchParams(location.search).has('reduced')) {
+  const real = window.matchMedia.bind(window);
+  window.matchMedia = (q) => (/prefers-reduced-motion/.test(q)
+    ? { matches: true, media: q, addEventListener() {}, removeEventListener() {} }
+    : real(q));
+}
+
+const town = createTown(document.getElementById('scene'), {
+  tokens,
+  onSelect: (sel) => console.log('select', JSON.stringify(sel)),
+});
+
+const tok = (input, output) => ({ input, output, cacheRead: input * 6, cacheWrite: 1e5, thinking: 0, costUsd: null });
+const agent = (id, kind, label, model, tool, state = 'running') => ({
+  id, kind, label, model, state,
+  tool: tool ? { name: tool[0], summary: tool[1], since: Date.now() } : null,
+  tokens: tok(120000, 9000), toolCount: 12,
+});
+const proc = (pid, name) => ({ pid, ppid: 1, name, cmd: `${name} --serve` });
+
+const snap = {
+  sessions: [
+    {
+      id: 'a', name: 'shop-api', cwd: 'C:/work/shop-api', alive: true, startedAt: Date.now() - 900000,
+      model: 'claude-fable-5-1', contextPct: 42, costUsd: 3.2, tokens: tok(520000, 21000),
+      agents: [
+        agent('main', 'main', 'main', 'claude-fable-5-1', ['Edit', 'public/game/city-scene.mjs']),
+        agent('s1', 'agent', 'impl-task-13', 'claude-opus-5', ['Bash', 'npm run verify']),
+        agent('s2', 'agent', 'review-task-13', 'claude-sonnet-5', ['Read', 'DESIGN.md']),
+      ],
+      procs: [proc(1011, 'node'), proc(1012, 'pwsh'), proc(1013, 'rg')],
+      tools: [], prompts: [], hookLog: [],
+    },
+    {
+      id: 'b', name: 'cc-monitor', cwd: 'C:/work/cc-monitor/feat-city', alive: true, startedAt: Date.now() - 300000,
+      model: 'claude-opus-5', contextPct: 71, costUsd: 1.08, tokens: tok(180000, 8000),
+      agents: [agent('main', 'main', 'main', 'claude-opus-5', ['WebFetch', 'jsdelivr.com/phaser'])],
+      procs: [proc(2011, 'node'), proc(2012, 'git')],
+      tools: [], prompts: [], hookLog: [],
+    },
+    {
+      id: 'c', name: 'old-session', cwd: 'D:/scratch/old-session', alive: false, startedAt: Date.now() - 7200000,
+      model: 'claude-haiku-4-5-20251001', contextPct: 88, costUsd: 0.42, tokens: tok(64000, 3000),
+      agents: [agent('main', 'main', 'main', 'claude-haiku-4-5-20251001', null, 'done')],
+      procs: [], tools: [], prompts: [], hookLog: [],
+    },
+  ],
+  totals: { sessionsAlive: 2, agentsRunning: 4, tokens: { input: 764000, output: 32000, costUsd: 4.7 } },
+  parseErrors: 0,
+};
+
+const retotal = () => {
+  const alive = snap.sessions.filter((s) => s.alive);
+  snap.totals = {
+    sessionsAlive: alive.length,
+    agentsRunning: alive.reduce((n, s) => n + s.agents.filter((a) => a.state === 'running').length, 0),
+    tokens: {
+      input: snap.sessions.reduce((n, s) => n + s.tokens.input, 0),
+      output: snap.sessions.reduce((n, s) => n + s.tokens.output, 0),
+      costUsd: snap.sessions.reduce((n, s) => n + s.costUsd, 0),
+    },
+  };
+};
+retotal();
+town.update(snap);
+
+// Tool rotation: every family the city has a building for, plus the destructive
+// shell command that sends a citizen off to chop a tree.
+const TOOLS = [
+  ['Edit', 'public/game/city-scene.mjs'],
+  ['Read', 'DESIGN.md'],
+  ['Bash', 'npm run verify'],
+  ['Agent', 'review Task 13'],
+  ['WebFetch', 'jsdelivr.com/phaser'],
+  ['Skill', 'superpowers:writing-plans'],
+  ['Bash', 'rm -rf .tmp'],
+  ['Grep', 'createTown'],
+];
+
+let step = 0;
+const tick = setInterval(() => {
+  step++;
+  snap.sessions[0].agents.forEach((a, i) => {
+    if (a.state !== 'running') return;
+    const t = TOOLS[(step + i * 3) % TOOLS.length];
+    a.tool = { name: t[0], summary: t[1], since: Date.now() };
+  });
+  const b = snap.sessions[1].agents[0];
+  const t = TOOLS[(step * 2 + 1) % TOOLS.length];
+  b.tool = { name: t[0], summary: t[1], since: Date.now() };
+
+  snap.sessions[0].tokens.input += 42000;
+  snap.sessions[0].tokens.output += 1800;
+  snap.sessions[0].costUsd += 0.31;
+  snap.sessions[0].contextPct = Math.min(96, snap.sessions[0].contextPct + 3);
+  snap.sessions[1].tokens.input += 9000;
+  snap.sessions[1].costUsd += 0.07;
+  retotal();
+  town.update(snap);
+}, 2500);
+
+const timers = [
+  setTimeout(() => town.flashShield('a', 'block'), 4000),
+  setTimeout(() => {
+    snap.sessions[1].agents.push(agent('s9', 'agent', 'doc-writer', 'claude-haiku-4-5-20251001', ['Skill', 'docs']));
+    retotal();
+    town.update(snap);
+  }, 6000),
+  setTimeout(() => {
+    const a = snap.sessions[1].agents.find((x) => x.id === 's9');
+    if (a) { a.state = 'done'; a.tool = null; }
+    retotal();
+    town.update(snap);
+  }, 14000),
+  setTimeout(() => {
+    snap.sessions[1].agents = snap.sessions[1].agents.filter((x) => x.id !== 's9');
+    retotal();
+    town.update(snap);
+  }, 18000),
+];
+
+const keys = (e) => {
+  if (e.key === 'f') town.flashShield('a', 'block');
+  if (e.key === 'w') town.flashShield('a', 'warn');
+  if (e.key === '0') town.resize();
+};
+addEventListener('keydown', keys);
+addEventListener('pagehide', () => {
+  clearInterval(tick);
+  for (const t of timers) clearTimeout(t);
+  removeEventListener('keydown', keys);
+  town.dispose();
+}, { once: true });
+
+// The Chrome gate drives these from the console.
+window.__town = town;
+window.__snap = snap;
+</script>

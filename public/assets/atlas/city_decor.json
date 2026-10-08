@@ -1,0 +1,252 @@
+{
+  "frames": {
+    "lamp": {
+      "frame": {
+        "x": 46,
+        "y": 1,
+        "w": 16,
+        "h": 40
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 40
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 40
+      }
+    },
+    "fence_ne": {
+      "frame": {
+        "x": 203,
+        "y": 1,
+        "w": 35,
+        "h": 33
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 35,
+        "h": 33
+      },
+      "sourceSize": {
+        "w": 35,
+        "h": 33
+      }
+    },
+    "fence_nw": {
+      "frame": {
+        "x": 1,
+        "y": 47,
+        "w": 35,
+        "h": 33
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 35,
+        "h": 33
+      },
+      "sourceSize": {
+        "w": 35,
+        "h": 33
+      }
+    },
+    "mailbox": {
+      "frame": {
+        "x": 109,
+        "y": 47,
+        "w": 20,
+        "h": 30
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 20,
+        "h": 30
+      },
+      "sourceSize": {
+        "w": 20,
+        "h": 30
+      }
+    },
+    "well": {
+      "frame": {
+        "x": 63,
+        "y": 1,
+        "w": 31,
+        "h": 40
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 31,
+        "h": 40
+      },
+      "sourceSize": {
+        "w": 31,
+        "h": 40
+      }
+    },
+    "cart": {
+      "frame": {
+        "x": 157,
+        "y": 1,
+        "w": 45,
+        "h": 35
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 45,
+        "h": 35
+      },
+      "sourceSize": {
+        "w": 45,
+        "h": 35
+      }
+    },
+    "barrels": {
+      "frame": {
+        "x": 123,
+        "y": 1,
+        "w": 33,
+        "h": 37
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 33,
+        "h": 37
+      },
+      "sourceSize": {
+        "w": 33,
+        "h": 37
+      }
+    },
+    "flowers": {
+      "frame": {
+        "x": 37,
+        "y": 47,
+        "w": 39,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 39,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 39,
+        "h": 31
+      }
+    },
+    "hedge": {
+      "frame": {
+        "x": 77,
+        "y": 47,
+        "w": 31,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 31,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 31,
+        "h": 31
+      }
+    },
+    "oak": {
+      "frame": {
+        "x": 1,
+        "y": 1,
+        "w": 44,
+        "h": 45
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 44,
+        "h": 45
+      },
+      "sourceSize": {
+        "w": 44,
+        "h": 45
+      }
+    },
+    "pine": {
+      "frame": {
+        "x": 95,
+        "y": 1,
+        "w": 27,
+        "h": 38
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 27,
+        "h": 38
+      },
+      "sourceSize": {
+        "w": 27,
+        "h": 38
+      }
+    },
+    "rocks": {
+      "frame": {
+        "x": 130,
+        "y": 47,
+        "w": 36,
+        "h": 29
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 36,
+        "h": 29
+      },
+      "sourceSize": {
+        "w": 36,
+        "h": 29
+      }
+    }
+  },
+  "meta": {
+    "image": "city_decor.png",
+    "size": {
+      "w": 256,
+      "h": 81
+    },
+    "scale": 1
+  }
+}

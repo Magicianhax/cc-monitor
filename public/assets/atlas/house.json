@@ -1,0 +1,32 @@
+{
+  "frames": {
+    "house": {
+      "frame": {
+        "x": 1,
+        "y": 1,
+        "w": 122,
+        "h": 105
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 122,
+        "h": 105
+      },
+      "sourceSize": {
+        "w": 122,
+        "h": 105
+      }
+    }
+  },
+  "meta": {
+    "image": "house.png",
+    "size": {
+      "w": 128,
+      "h": 107
+    },
+    "scale": 1
+  }
+}

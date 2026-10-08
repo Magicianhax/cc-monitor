@@ -1,0 +1,132 @@
+{
+  "frames": {
+    "windmill": {
+      "frame": {
+        "x": 141,
+        "y": 1,
+        "w": 150,
+        "h": 154
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 150,
+        "h": 154
+      },
+      "sourceSize": {
+        "w": 150,
+        "h": 154
+      }
+    },
+    "greenhouse": {
+      "frame": {
+        "x": 301,
+        "y": 157,
+        "w": 162,
+        "h": 136
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 162,
+        "h": 136
+      },
+      "sourceSize": {
+        "w": 162,
+        "h": 136
+      }
+    },
+    "bell_tower": {
+      "frame": {
+        "x": 1,
+        "y": 1,
+        "w": 139,
+        "h": 155
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 139,
+        "h": 155
+      },
+      "sourceSize": {
+        "w": 139,
+        "h": 155
+      }
+    },
+    "workshop": {
+      "frame": {
+        "x": 142,
+        "y": 157,
+        "w": 158,
+        "h": 142
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 158,
+        "h": 142
+      },
+      "sourceSize": {
+        "w": 158,
+        "h": 142
+      }
+    },
+    "inn": {
+      "frame": {
+        "x": 292,
+        "y": 1,
+        "w": 162,
+        "h": 146
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 162,
+        "h": 146
+      },
+      "sourceSize": {
+        "w": 162,
+        "h": 146
+      }
+    },
+    "observatory": {
+      "frame": {
+        "x": 1,
+        "y": 157,
+        "w": 140,
+        "h": 146
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 140,
+        "h": 146
+      },
+      "sourceSize": {
+        "w": 140,
+        "h": 146
+      }
+    }
+  },
+  "meta": {
+    "image": "city_extra_b.png",
+    "size": {
+      "w": 512,
+      "h": 304
+    },
+    "scale": 1
+  }
+}

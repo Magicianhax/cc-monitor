@@ -1,0 +1,132 @@
+{
+  "frames": {
+    "cafe": {
+      "frame": {
+        "x": 152,
+        "y": 161,
+        "w": 151,
+        "h": 137
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 151,
+        "h": 137
+      },
+      "sourceSize": {
+        "w": 151,
+        "h": 137
+      }
+    },
+    "bakery": {
+      "frame": {
+        "x": 1,
+        "y": 161,
+        "w": 150,
+        "h": 138
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 150,
+        "h": 138
+      },
+      "sourceSize": {
+        "w": 150,
+        "h": 138
+      }
+    },
+    "market_stall": {
+      "frame": {
+        "x": 304,
+        "y": 161,
+        "w": 152,
+        "h": 126
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 152,
+        "h": 126
+      },
+      "sourceSize": {
+        "w": 152,
+        "h": 126
+      }
+    },
+    "warehouse": {
+      "frame": {
+        "x": 152,
+        "y": 1,
+        "w": 158,
+        "h": 145
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 158,
+        "h": 145
+      },
+      "sourceSize": {
+        "w": 158,
+        "h": 145
+      }
+    },
+    "apartment": {
+      "frame": {
+        "x": 1,
+        "y": 1,
+        "w": 150,
+        "h": 159
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 150,
+        "h": 159
+      },
+      "sourceSize": {
+        "w": 150,
+        "h": 159
+      }
+    },
+    "clinic": {
+      "frame": {
+        "x": 311,
+        "y": 1,
+        "w": 153,
+        "h": 145
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 153,
+        "h": 145
+      },
+      "sourceSize": {
+        "w": 153,
+        "h": 145
+      }
+    }
+  },
+  "meta": {
+    "image": "city_extra_a.png",
+    "size": {
+      "w": 512,
+      "h": 300
+    },
+    "scale": 1
+  }
+}

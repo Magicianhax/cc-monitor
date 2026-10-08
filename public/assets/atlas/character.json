@@ -1,0 +1,972 @@
+{
+  "frames": {
+    "idle_front": {
+      "frame": {
+        "x": 111,
+        "y": 101,
+        "w": 21,
+        "h": 30
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 21,
+        "h": 30
+      },
+      "sourceSize": {
+        "w": 21,
+        "h": 30
+      }
+    },
+    "idle_side": {
+      "frame": {
+        "x": 149,
+        "y": 36,
+        "w": 16,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 31
+      }
+    },
+    "walk1": {
+      "frame": {
+        "x": 166,
+        "y": 36,
+        "w": 18,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 18,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 18,
+        "h": 31
+      }
+    },
+    "walk2": {
+      "frame": {
+        "x": 185,
+        "y": 36,
+        "w": 19,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 19,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 19,
+        "h": 31
+      }
+    },
+    "walk3": {
+      "frame": {
+        "x": 151,
+        "y": 1,
+        "w": 18,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 18,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 18,
+        "h": 32
+      }
+    },
+    "walk4": {
+      "frame": {
+        "x": 205,
+        "y": 36,
+        "w": 17,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 17,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 17,
+        "h": 31
+      }
+    },
+    "work_hammer": {
+      "frame": {
+        "x": 1,
+        "y": 1,
+        "w": 24,
+        "h": 34
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 34
+      },
+      "sourceSize": {
+        "w": 24,
+        "h": 34
+      }
+    },
+    "work_read": {
+      "frame": {
+        "x": 170,
+        "y": 1,
+        "w": 21,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 21,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 21,
+        "h": 32
+      }
+    },
+    "idle_front_fable": {
+      "frame": {
+        "x": 133,
+        "y": 101,
+        "w": 21,
+        "h": 30
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 21,
+        "h": 30
+      },
+      "sourceSize": {
+        "w": 21,
+        "h": 30
+      }
+    },
+    "idle_front_opus": {
+      "frame": {
+        "x": 155,
+        "y": 101,
+        "w": 21,
+        "h": 30
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 21,
+        "h": 30
+      },
+      "sourceSize": {
+        "w": 21,
+        "h": 30
+      }
+    },
+    "idle_front_sonnet": {
+      "frame": {
+        "x": 177,
+        "y": 101,
+        "w": 21,
+        "h": 30
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 21,
+        "h": 30
+      },
+      "sourceSize": {
+        "w": 21,
+        "h": 30
+      }
+    },
+    "idle_front_haiku": {
+      "frame": {
+        "x": 199,
+        "y": 101,
+        "w": 21,
+        "h": 30
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 21,
+        "h": 30
+      },
+      "sourceSize": {
+        "w": 21,
+        "h": 30
+      }
+    },
+    "idle_front_unknown": {
+      "frame": {
+        "x": 221,
+        "y": 101,
+        "w": 21,
+        "h": 30
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 21,
+        "h": 30
+      },
+      "sourceSize": {
+        "w": 21,
+        "h": 30
+      }
+    },
+    "idle_side_fable": {
+      "frame": {
+        "x": 223,
+        "y": 36,
+        "w": 16,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 31
+      }
+    },
+    "idle_side_opus": {
+      "frame": {
+        "x": 1,
+        "y": 69,
+        "w": 16,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 31
+      }
+    },
+    "idle_side_sonnet": {
+      "frame": {
+        "x": 18,
+        "y": 69,
+        "w": 16,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 31
+      }
+    },
+    "idle_side_haiku": {
+      "frame": {
+        "x": 35,
+        "y": 69,
+        "w": 16,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 31
+      }
+    },
+    "idle_side_unknown": {
+      "frame": {
+        "x": 52,
+        "y": 69,
+        "w": 16,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 31
+      }
+    },
+    "walk1_fable": {
+      "frame": {
+        "x": 69,
+        "y": 69,
+        "w": 18,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 18,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 18,
+        "h": 31
+      }
+    },
+    "walk1_opus": {
+      "frame": {
+        "x": 88,
+        "y": 69,
+        "w": 18,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 18,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 18,
+        "h": 31
+      }
+    },
+    "walk1_sonnet": {
+      "frame": {
+        "x": 107,
+        "y": 69,
+        "w": 18,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 18,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 18,
+        "h": 31
+      }
+    },
+    "walk1_haiku": {
+      "frame": {
+        "x": 126,
+        "y": 69,
+        "w": 18,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 18,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 18,
+        "h": 31
+      }
+    },
+    "walk1_unknown": {
+      "frame": {
+        "x": 145,
+        "y": 69,
+        "w": 18,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 18,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 18,
+        "h": 31
+      }
+    },
+    "walk2_fable": {
+      "frame": {
+        "x": 164,
+        "y": 69,
+        "w": 19,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 19,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 19,
+        "h": 31
+      }
+    },
+    "walk2_opus": {
+      "frame": {
+        "x": 184,
+        "y": 69,
+        "w": 19,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 19,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 19,
+        "h": 31
+      }
+    },
+    "walk2_sonnet": {
+      "frame": {
+        "x": 204,
+        "y": 69,
+        "w": 19,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 19,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 19,
+        "h": 31
+      }
+    },
+    "walk2_haiku": {
+      "frame": {
+        "x": 224,
+        "y": 69,
+        "w": 19,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 19,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 19,
+        "h": 31
+      }
+    },
+    "walk2_unknown": {
+      "frame": {
+        "x": 1,
+        "y": 101,
+        "w": 19,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 19,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 19,
+        "h": 31
+      }
+    },
+    "walk3_fable": {
+      "frame": {
+        "x": 192,
+        "y": 1,
+        "w": 18,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 18,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 18,
+        "h": 32
+      }
+    },
+    "walk3_opus": {
+      "frame": {
+        "x": 211,
+        "y": 1,
+        "w": 18,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 18,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 18,
+        "h": 32
+      }
+    },
+    "walk3_sonnet": {
+      "frame": {
+        "x": 230,
+        "y": 1,
+        "w": 18,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 18,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 18,
+        "h": 32
+      }
+    },
+    "walk3_haiku": {
+      "frame": {
+        "x": 1,
+        "y": 36,
+        "w": 18,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 18,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 18,
+        "h": 32
+      }
+    },
+    "walk3_unknown": {
+      "frame": {
+        "x": 20,
+        "y": 36,
+        "w": 18,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 18,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 18,
+        "h": 32
+      }
+    },
+    "walk4_fable": {
+      "frame": {
+        "x": 21,
+        "y": 101,
+        "w": 17,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 17,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 17,
+        "h": 31
+      }
+    },
+    "walk4_opus": {
+      "frame": {
+        "x": 39,
+        "y": 101,
+        "w": 17,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 17,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 17,
+        "h": 31
+      }
+    },
+    "walk4_sonnet": {
+      "frame": {
+        "x": 57,
+        "y": 101,
+        "w": 17,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 17,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 17,
+        "h": 31
+      }
+    },
+    "walk4_haiku": {
+      "frame": {
+        "x": 75,
+        "y": 101,
+        "w": 17,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 17,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 17,
+        "h": 31
+      }
+    },
+    "walk4_unknown": {
+      "frame": {
+        "x": 93,
+        "y": 101,
+        "w": 17,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 17,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 17,
+        "h": 31
+      }
+    },
+    "work_hammer_fable": {
+      "frame": {
+        "x": 26,
+        "y": 1,
+        "w": 24,
+        "h": 34
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 34
+      },
+      "sourceSize": {
+        "w": 24,
+        "h": 34
+      }
+    },
+    "work_hammer_opus": {
+      "frame": {
+        "x": 51,
+        "y": 1,
+        "w": 24,
+        "h": 34
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 34
+      },
+      "sourceSize": {
+        "w": 24,
+        "h": 34
+      }
+    },
+    "work_hammer_sonnet": {
+      "frame": {
+        "x": 76,
+        "y": 1,
+        "w": 24,
+        "h": 34
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 34
+      },
+      "sourceSize": {
+        "w": 24,
+        "h": 34
+      }
+    },
+    "work_hammer_haiku": {
+      "frame": {
+        "x": 101,
+        "y": 1,
+        "w": 24,
+        "h": 34
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 34
+      },
+      "sourceSize": {
+        "w": 24,
+        "h": 34
+      }
+    },
+    "work_hammer_unknown": {
+      "frame": {
+        "x": 126,
+        "y": 1,
+        "w": 24,
+        "h": 34
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 34
+      },
+      "sourceSize": {
+        "w": 24,
+        "h": 34
+      }
+    },
+    "work_read_fable": {
+      "frame": {
+        "x": 39,
+        "y": 36,
+        "w": 21,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 21,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 21,
+        "h": 32
+      }
+    },
+    "work_read_opus": {
+      "frame": {
+        "x": 61,
+        "y": 36,
+        "w": 21,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 21,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 21,
+        "h": 32
+      }
+    },
+    "work_read_sonnet": {
+      "frame": {
+        "x": 83,
+        "y": 36,
+        "w": 21,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 21,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 21,
+        "h": 32
+      }
+    },
+    "work_read_haiku": {
+      "frame": {
+        "x": 105,
+        "y": 36,
+        "w": 21,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 21,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 21,
+        "h": 32
+      }
+    },
+    "work_read_unknown": {
+      "frame": {
+        "x": 127,
+        "y": 36,
+        "w": 21,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 21,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 21,
+        "h": 32
+      }
+    }
+  },
+  "meta": {
+    "image": "character.png",
+    "size": {
+      "w": 256,
+      "h": 133
+    },
+    "scale": 1
+  }
+}

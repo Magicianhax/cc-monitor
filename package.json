@@ -1,0 +1,42 @@
+{
+  "name": "cc-monitor",
+  "version": "1.0.0",
+  "description": "Watch every Claude Code session on your machine as a living pixel-art city.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "Magicianhax",
+  "homepage": "https://github.com/Magicianhax/cc-monitor#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Magicianhax/cc-monitor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Magicianhax/cc-monitor/issues"
+  },
+  "keywords": [
+    "claude-code",
+    "claude",
+    "anthropic",
+    "ai-agents",
+    "dashboard",
+    "monitoring",
+    "pixel-art",
+    "phaser",
+    "isometric"
+  ],
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test test/*.test.mjs",
+    "verify": "node --test test/*.test.mjs",
+    "art:prep": "node tools/prep-art.mjs",
+    "map:build": "node tools/make-map.mjs",
+    "demo": "node tools/demo.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "pngjs": "^7.0.0"
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "frames": {
+    "bank": {
+      "frame": {
+        "x": 256,
+        "y": 1,
+        "w": 155,
+        "h": 153
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 155,
+        "h": 153
+      },
+      "sourceSize": {
+        "w": 155,
+        "h": 153
+      }
+    },
+    "school": {
+      "frame": {
+        "x": 1,
+        "y": 1,
+        "w": 160,
+        "h": 169
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 160,
+        "h": 169
+      },
+      "sourceSize": {
+        "w": 160,
+        "h": 169
+      }
+    },
+    "water_tower": {
+      "frame": {
+        "x": 162,
+        "y": 1,
+        "w": 93,
+        "h": 161
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 93,
+        "h": 161
+      },
+      "sourceSize": {
+        "w": 93,
+        "h": 161
+      }
+    },
+    "fountain": {
+      "frame": {
+        "x": 1,
+        "y": 171,
+        "w": 159,
+        "h": 108
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 159,
+        "h": 108
+      },
+      "sourceSize": {
+        "w": 159,
+        "h": 108
+      }
+    },
+    "bench": {
+      "frame": {
+        "x": 161,
+        "y": 171,
+        "w": 105,
+        "h": 101
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 105,
+        "h": 101
+      },
+      "sourceSize": {
+        "w": 105,
+        "h": 101
+      }
+    },
+    "tree": {
+      "frame": {
+        "x": 412,
+        "y": 1,
+        "w": 73,
+        "h": 114
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 73,
+        "h": 114
+      },
+      "sourceSize": {
+        "w": 73,
+        "h": 114
+      }
+    },
+    "stump": {
+      "frame": {
+        "x": 267,
+        "y": 171,
+        "w": 62,
+        "h": 55
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 62,
+        "h": 55
+      },
+      "sourceSize": {
+        "w": 62,
+        "h": 55
+      }
+    }
+  },
+  "meta": {
+    "image": "city_civic_b.png",
+    "size": {
+      "w": 512,
+      "h": 280
+    },
+    "scale": 1
+  }
+}

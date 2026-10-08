@@ -1,0 +1,52 @@
+{
+  "frames": {
+    "critter1": {
+      "frame": {
+        "x": 15,
+        "y": 1,
+        "w": 13,
+        "h": 12
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 13,
+        "h": 12
+      },
+      "sourceSize": {
+        "w": 13,
+        "h": 12
+      }
+    },
+    "critter2": {
+      "frame": {
+        "x": 1,
+        "y": 1,
+        "w": 13,
+        "h": 13
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 13,
+        "h": 13
+      },
+      "sourceSize": {
+        "w": 13,
+        "h": 13
+      }
+    }
+  },
+  "meta": {
+    "image": "critter.png",
+    "size": {
+      "w": 32,
+      "h": 15
+    },
+    "scale": 1
+  }
+}

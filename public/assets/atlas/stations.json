@@ -1,0 +1,172 @@
+{
+  "frames": {
+    "anvil": {
+      "frame": {
+        "x": 81,
+        "y": 47,
+        "w": 36,
+        "h": 36
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 36,
+        "h": 36
+      },
+      "sourceSize": {
+        "w": 36,
+        "h": 36
+      }
+    },
+    "desk": {
+      "frame": {
+        "x": 1,
+        "y": 47,
+        "w": 43,
+        "h": 40
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 43,
+        "h": 40
+      },
+      "sourceSize": {
+        "w": 43,
+        "h": 40
+      }
+    },
+    "terminal": {
+      "frame": {
+        "x": 35,
+        "y": 1,
+        "w": 35,
+        "h": 44
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 35,
+        "h": 44
+      },
+      "sourceSize": {
+        "w": 35,
+        "h": 44
+      }
+    },
+    "dish": {
+      "frame": {
+        "x": 71,
+        "y": 1,
+        "w": 25,
+        "h": 43
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 25,
+        "h": 43
+      },
+      "sourceSize": {
+        "w": 25,
+        "h": 43
+      }
+    },
+    "flagpole": {
+      "frame": {
+        "x": 1,
+        "y": 1,
+        "w": 33,
+        "h": 45
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 33,
+        "h": 45
+      },
+      "sourceSize": {
+        "w": 33,
+        "h": 45
+      }
+    },
+    "doormat": {
+      "frame": {
+        "x": 1,
+        "y": 88,
+        "w": 43,
+        "h": 25
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 43,
+        "h": 25
+      },
+      "sourceSize": {
+        "w": 43,
+        "h": 25
+      }
+    },
+    "crate": {
+      "frame": {
+        "x": 45,
+        "y": 47,
+        "w": 35,
+        "h": 38
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 35,
+        "h": 38
+      },
+      "sourceSize": {
+        "w": 35,
+        "h": 38
+      }
+    },
+    "signpost": {
+      "frame": {
+        "x": 97,
+        "y": 1,
+        "w": 25,
+        "h": 41
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 25,
+        "h": 41
+      },
+      "sourceSize": {
+        "w": 25,
+        "h": 41
+      }
+    }
+  },
+  "meta": {
+    "image": "stations.png",
+    "size": {
+      "w": 128,
+      "h": 114
+    },
+    "scale": 1
+  }
+}
